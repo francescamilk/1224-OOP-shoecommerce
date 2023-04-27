@@ -34,12 +34,18 @@ class BankAccount
 
   def deposit(amount)
     add_transaction(amount)
-    "You have deposited: #{amount}"
+    "You have deposited #{amount}"
   end
 
   def transactions_history(args = {})
-    # TODO: Check if there is a password and if so if it is correct
-    # TODO: return a string displaying the transactions, BUT NOT return the transaction array!
+    password = args[:password]
+    if password.nil?
+      "Please provide a password..."
+    elsif password != @password
+      "Sorry, wrong password."
+    else
+      @transactions.join(', ')
+    end
   end
 
   def iban
@@ -48,17 +54,13 @@ class BankAccount
   end
 
   def to_s
-    # Method used when printing account object as string (also used for string interpolation)
-    # TODO: return a string with the account owner, the hidden iban and the balance of the account
     "#{@name} - #{iban()} - #{@balance}"
   end
 
   private
 
   def add_transaction(amount)
-    # TODO: add the amount in the transactions array
     @transactions << amount
-    # TODO: update the current balance (which represents the balance of the account)
     @balance += amount
   end
 end
